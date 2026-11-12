@@ -18,14 +18,14 @@
           },
           colors: {
             mody: {
-              green: '#1b5e20',
-              darkgreen: '#113e15',
-              lightgreen: '#e8f5e9',
+              green: '#15803d',
+              darkgreen: '#14532d',
+              lightgreen: '#f0fdf4',
               gold: '#d97706',
               amber: '#f59e0b',
               lightgold: '#fef3c7',
-              navy: '#1e3a8a',
-              cream: '#fcfbf7'
+              navy: '#0f172a',
+              cream: '#f8fafc'
             }
           }
         }
@@ -36,18 +36,46 @@
     body {
       font-family: 'Inter', system-ui, -apple-system, sans-serif;
       background-color: #f8fafc;
+      background-image: radial-gradient(at 0% 0%, rgba(21, 128, 61, 0.06) 0px, transparent 50%),
+                        radial-gradient(at 100% 0%, rgba(217, 119, 6, 0.05) 0px, transparent 50%);
       color: #0f172a;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
     }
     .sheet-paper {
       font-family: 'Merriweather', 'Times New Roman', serif;
       background: #ffffff;
-      box-shadow: 0 10px 30px -5px rgba(15, 23, 42, 0.12), 0 0 1px 1px rgba(15, 23, 42, 0.08);
+      box-shadow: 0 10px 30px -5px rgba(15, 23, 42, 0.08), 0 0 1px 1px rgba(15, 23, 42, 0.06);
     }
     .mody-gradient {
-      background: linear-gradient(135deg, #113e15 0%, #1b5e20 55%, #1e3a8a 100%);
+      background: linear-gradient(135deg, #14532d 0%, #15803d 55%, #166534 100%);
     }
     .gold-gradient {
       background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+    }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    @keyframes fadeSlideUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes modalPop {
+      from { opacity: 0; transform: scale(0.95) translateY(8px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    .animate-view-in {
+      animation: fadeSlideUp 0.28s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+    .animate-card-in {
+      animation: fadeSlideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+    .animate-modal-in {
+      animation: modalPop 0.22s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .animate-view-in, .animate-card-in, .animate-modal-in {
+        animation: none !important;
+      }
     }
     @media print {
       .no-print { display: none !important; }
@@ -58,192 +86,106 @@
 </head>
 <body class="min-h-screen flex flex-col selection:bg-amber-200 selection:text-slate-900">
 
-  <!-- TOP UNIVERSITY IDENTITY BAR -->
-  <div class="bg-mody-darkgreen text-amber-100 text-xs py-1.5 px-4 border-b border-amber-500/30 no-print">
-    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
-      <div class="flex items-center gap-2 flex-wrap">
-        <span class="inline-flex items-center gap-1 font-semibold text-amber-300">
-          <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0z"/></svg>
-          Mody University of Science &amp; Technology, Lakshmangarh (Rajasthan)
-        </span>
-        <span class="hidden sm:inline text-emerald-300/60">|</span>
-        <span class="hidden sm:inline text-emerald-100">School of Engineering &amp; Technology (SET) — B.Tech CSE</span>
-        <span class="inline-flex items-center px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 font-semibold border border-amber-400/30 text-[10px]">NAAC A+</span>
-        <span class="inline-flex items-center px-1.5 py-0.5 rounded bg-blue-500/20 text-blue-200 font-semibold border border-blue-400/30 text-[10px]">ABET Accredited</span>
-      </div>
-      <div class="flex items-center gap-3">
-        <span id="cookieStatusBadge" class="inline-flex items-center gap-1 text-[11px] text-emerald-200 bg-emerald-900/60 px-2 py-0.5 rounded border border-emerald-700">
-          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
-          <span id="cookieStatusText">Cookie Saved</span>
-        </span>
-        <a href="https://www.modyuniversity.ac.in/school-of-engineering-and-technology/departments/computer-science-and-engineering/" target="_blank" rel="noopener noreferrer" class="underline hover:text-white transition">Official MUST CSE Portal &nearr;</a>
-      </div>
-    </div>
-  </div>
-
   <!-- MAIN NAVIGATION HEADER -->
-  <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm no-print">
-    <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-3">
-      <!-- Brand Logo -->
-      <button type="button" onclick="navigateHome()" class="flex items-center gap-3 text-left group focus:outline-none">
-        <div class="w-11 h-11 rounded-full bg-mody-green flex items-center justify-center border-2 border-mody-gold shadow-sm group-hover:scale-105 transition">
-          <span class="font-serif font-bold text-lg tracking-tighter text-amber-300">mu</span>
-        </div>
-        <div>
-          <div class="flex items-center gap-1.5">
-            <span class="font-extrabold text-xl tracking-tight text-mody-green">MODY</span>
-            <span class="font-extrabold text-xl tracking-tight text-mody-gold">HELPER</span>
-            <span class="text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded bg-emerald-50 text-mody-green border border-emerald-200">B.Tech CSE</span>
+  <header class="bg-white/90 backdrop-blur-md border-b border-slate-200/80 sticky top-0 z-30 no-print">
+    <div class="max-w-7xl mx-auto px-3.5 sm:px-6 py-2.5 sm:py-3 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-2.5">
+      <!-- Top Row: Brand Logo + Mobile Semester Button -->
+      <div class="flex items-center justify-between gap-3">
+        <button type="button" onclick="navigateHome()" class="flex items-center gap-2.5 text-left group focus:outline-none active:scale-[0.98] transition">
+          <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-mody-darkgreen to-mody-green flex items-center justify-center border border-amber-400/80 shadow-sm group-hover:scale-105 transition">
+            <span class="font-serif font-bold text-base sm:text-lg tracking-tighter text-amber-300">mu</span>
           </div>
-          <p class="text-[11px] text-slate-500 font-medium">Complete Semester-Wise Syllabus, Marks Split &amp; Student Companion</p>
-        </div>
-      </button>
+          <div>
+            <div class="flex items-center gap-1.5">
+              <span class="font-extrabold text-base sm:text-lg tracking-tight text-mody-darkgreen">Mody<span class="text-mody-gold">Helper</span></span>
+              <span class="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-mody-lightgreen text-mody-green border border-emerald-200/80">B.Tech CSE</span>
+            </div>
+            <p class="text-[11px] text-slate-500 hidden sm:block">Mody University Syllabus &amp; Student Companion</p>
+          </div>
+        </button>
 
-      <!-- Controls: Semester Switcher, Batch Toggle, Search & Nav -->
-      <div class="flex flex-wrap items-center gap-2">
-        <!-- Quick Semester Select -->
-        <div class="flex items-center bg-emerald-50/80 border border-emerald-200 rounded-lg px-2.5 py-1.5">
-          <label for="headerSemSelect" class="text-[11px] font-bold uppercase tracking-wider text-mody-green mr-2">Semester:</label>
-          <select id="headerSemSelect" onchange="handleHeaderSemesterChange(this.value)" class="bg-transparent text-xs font-bold text-slate-800 focus:outline-none cursor-pointer pr-1">
-            <option value="1">Sem 1 (1st Yr Autumn)</option>
-            <option value="2">Sem 2 (1st Yr Spring)</option>
-            <option value="3">Sem 3 (2nd Yr Autumn)</option>
-            <option value="4">Sem 4 (2nd Yr Spring)</option>
-            <option value="5">Sem 5 (3rd Yr Autumn)</option>
-            <option value="6">Sem 6 (3rd Yr Spring)</option>
-            <option value="7">Sem 7 (4th Yr Autumn)</option>
-            <option value="8">Sem 8 (4th Yr Spring)</option>
-          </select>
-        </div>
+        <!-- Mobile Semester Switcher (shown on <lg) -->
+        <button type="button" onclick="openSemesterModal()" class="lg:hidden inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold bg-mody-lightgreen text-mody-darkgreen border border-emerald-200/90 hover:bg-emerald-100/80 active:scale-[0.97] transition shadow-xs min-h-[38px]">
+          <span class="header-sem-label">Sem 1</span>
+          <svg class="w-3.5 h-3.5 text-mody-green" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+        </button>
+      </div>
 
-        <!-- Curriculum Batch Selector -->
-        <div class="flex items-center bg-amber-50 border border-amber-200 rounded-lg px-2.5 py-1.5" title="Switch between New 2025-2029 Curriculum and 2023-2027 Curriculum">
-          <label for="headerBatchSelect" class="text-[11px] font-bold uppercase tracking-wider text-amber-900 mr-1.5">Batch:</label>
-          <select id="headerBatchSelect" onchange="handleBatchChange(this.value)" class="bg-transparent text-xs font-bold text-amber-900 focus:outline-none cursor-pointer">
-            <option value="2025-2029">2025–2029 (New Changes)</option>
-            <option value="2023-2027">2023–2027 (Base)</option>
-          </select>
-        </div>
+      <!-- Primary Navigation Tabs (Horizontally scrollable on mobile) -->
+      <nav class="flex items-center gap-1 bg-slate-100/80 p-1 rounded-xl border border-slate-200/70 overflow-x-auto no-scrollbar max-w-full">
+        <button type="button" id="navBtnDashboard" onclick="switchMainView('dashboard')" class="px-3 py-2 sm:py-1.5 rounded-lg text-xs font-semibold transition bg-mody-green text-white shadow-sm whitespace-nowrap active:scale-[0.97]">
+          My Semester
+        </button>
+        <button type="button" id="navBtnAllCourses" onclick="switchMainView('all-courses')" class="px-3 py-2 sm:py-1.5 rounded-lg text-xs font-semibold transition text-slate-600 hover:text-slate-900 hover:bg-white whitespace-nowrap active:scale-[0.97]">
+          All Subjects (66)
+        </button>
+        <button type="button" id="navBtnElectives" onclick="switchMainView('electives')" class="px-3 py-2 sm:py-1.5 rounded-lg text-xs font-semibold transition text-slate-600 hover:text-slate-900 hover:bg-white whitespace-nowrap active:scale-[0.97]">
+          Electives &amp; AI
+        </button>
+        <button type="button" id="navBtnChanges" onclick="switchMainView('changes')" class="px-3 py-2 sm:py-1.5 rounded-lg text-xs font-semibold transition text-slate-600 hover:text-slate-900 hover:bg-white flex items-center gap-1.5 whitespace-nowrap active:scale-[0.97]">
+          <span>Updates</span>
+          <span class="px-1.5 py-0.2 bg-amber-100 text-amber-800 rounded-full text-[10px] font-bold">New</span>
+        </button>
+        <button type="button" id="navBtnCalculator" onclick="switchMainView('calculator')" class="px-3 py-2 sm:py-1.5 rounded-lg text-xs font-semibold transition text-slate-600 hover:text-slate-900 hover:bg-white whitespace-nowrap active:scale-[0.97]">
+          Marks &amp; SGPA
+        </button>
+      </nav>
 
-        <!-- Primary Navigation Tabs -->
-        <nav class="flex items-center gap-1 bg-slate-100 p-1 rounded-lg border border-slate-200">
-          <button type="button" id="navBtnDashboard" onclick="switchMainView('dashboard')" class="px-2.5 py-1.5 rounded-md text-xs font-semibold transition bg-mody-green text-white shadow-sm">
-            My Semester
-          </button>
-          <button type="button" id="navBtnAllCourses" onclick="switchMainView('all-courses')" class="px-2.5 py-1.5 rounded-md text-xs font-semibold transition text-slate-700 hover:bg-white">
-            All Subjects (66)
-          </button>
-          <button type="button" id="navBtnElectives" onclick="switchMainView('electives')" class="px-2.5 py-1.5 rounded-md text-xs font-semibold transition text-slate-700 hover:bg-white">
-            Electives &amp; AI
-          </button>
-          <button type="button" id="navBtnChanges" onclick="switchMainView('changes')" class="px-2.5 py-1.5 rounded-md text-xs font-semibold transition text-slate-700 hover:bg-white flex items-center gap-1">
-            <span>New Changes</span>
-            <span class="px-1.5 py-0.2 bg-amber-500 text-white rounded-full text-[10px]">2025</span>
-          </button>
-          <button type="button" id="navBtnCalculator" onclick="switchMainView('calculator')" class="px-2.5 py-1.5 rounded-md text-xs font-semibold transition text-slate-700 hover:bg-white">
-            Marks &amp; SGPA
-          </button>
-        </nav>
-
-        <!-- Open Semester Selector Modal Button -->
-        <button type="button" onclick="openSemesterModal()" class="px-2.5 py-1.5 rounded-lg text-xs font-semibold border border-mody-gold/40 bg-amber-500/10 text-amber-900 hover:bg-amber-500/20 transition flex items-center gap-1">
-          <svg class="w-3.5 h-3.5 text-mody-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>
-          <span>Switch Sem</span>
+      <!-- Desktop Semester Switcher (shown on lg+) -->
+      <div class="hidden lg:flex items-center gap-2">
+        <button type="button" onclick="openSemesterModal()" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold bg-mody-lightgreen text-mody-darkgreen border border-emerald-200/90 hover:bg-emerald-100/80 active:scale-[0.97] transition shadow-xs">
+          <span id="headerSemBtnLabel" class="header-sem-label">Sem 1</span>
+          <svg class="w-3.5 h-3.5 text-mody-green" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
         </button>
       </div>
     </div>
   </header>
 
   <!-- MAIN CONTENT CONTAINER -->
-  <main class="flex-1 max-w-7xl w-full mx-auto px-4 py-6">
+  <main class="flex-1 max-w-7xl w-full mx-auto px-3.5 sm:px-6 py-5 sm:py-7">
     <div id="appMainContainer"></div>
   </main>
 
-  <!-- FIRST-VISIT / SWITCH SEMESTER MODAL (COOKIE SAVER) -->
-  <div id="semesterModal" class="fixed inset-0 z-50 bg-slate-900/70 backdrop-blur-sm hidden items-center justify-center p-4 no-print">
-    <div class="bg-white rounded-2xl max-w-2xl w-full overflow-hidden shadow-2xl border border-emerald-900/10">
-      <div class="mody-gradient p-6 text-white relative">
-        <div class="flex items-center justify-between">
-          <div class="flex items-center gap-3">
-            <div class="w-12 h-12 rounded-full bg-white/10 border-2 border-amber-400 flex items-center justify-center">
-              <span class="font-serif font-bold text-xl text-amber-300">mu</span>
-            </div>
-            <div>
-              <span class="text-[11px] uppercase tracking-widest text-amber-300 font-bold">Welcome to ModyHelper</span>
-              <h2 class="text-xl sm:text-2xl font-extrabold">Select Your Current Semester</h2>
-            </div>
+  <!-- COMPACT SEMESTER SELECTION POPUP -->
+  <div id="semesterModal" class="fixed inset-0 z-50 bg-slate-900/45 backdrop-blur-xs hidden items-center justify-center p-4 no-print" onclick="if(event.target===this) closeSemesterModal()">
+    <div class="bg-white rounded-2xl max-w-xs sm:max-w-sm w-full p-5 shadow-2xl border border-slate-200/80 animate-modal-in">
+      <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-mody-darkgreen to-mody-green flex items-center justify-center border border-amber-400/70">
+            <span class="font-serif font-bold text-sm text-amber-300">mu</span>
           </div>
-          <button type="button" onclick="closeSemesterModal()" class="text-white/80 hover:text-white p-1.5 rounded-lg hover:bg-white/10 transition" title="Close">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-          </button>
+          <div>
+            <h2 class="text-base font-bold text-slate-900 leading-tight">Select Semester</h2>
+            <p class="text-[11px] text-slate-500">Tap to open your subjects</p>
+          </div>
         </div>
-        <p class="mt-2 text-xs sm:text-sm text-emerald-100">
-          Your selection is automatically saved in browser cookies (<code class="bg-black/25 px-1.5 py-0.5 rounded text-amber-200">modyhelper_sem</code>) so you never have to select it again—and you can switch anytime from the top bar.
-        </p>
+        <button type="button" onclick="closeSemesterModal()" class="text-slate-400 hover:text-slate-700 p-1.5 rounded-lg hover:bg-slate-100 transition" title="Close">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
       </div>
 
-      <div class="p-6 space-y-5 max-h-[80vh] overflow-y-auto">
-        <!-- Step 1: Select Curriculum Batch -->
-        <div>
-          <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">1. Choose Curriculum Batch Scheme</label>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="modalBatchGrid">
-            <button type="button" onclick="selectModalBatch('2025-2029')" id="modalBatchBtn2025" class="p-3.5 rounded-xl border-2 text-left transition flex items-start justify-between border-mody-green bg-emerald-50/70">
-              <div>
-                <div class="flex items-center gap-1.5">
-                  <span class="font-bold text-sm text-slate-900">2025–2029 Batch Onwards</span>
-                  <span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-amber-500 text-white">NEW</span>
-                </div>
-                <p class="text-xs text-slate-600 mt-1">Includes new PBL courses, 50/50 Lab split, updated EE/ME/EC/CS credits, AI-ML Lab &amp; Generative AI.</p>
-              </div>
-              <span class="w-4 h-4 rounded-full border-2 border-mody-green bg-mody-green mt-0.5 shrink-0"></span>
-            </button>
-            <button type="button" onclick="selectModalBatch('2023-2027')" id="modalBatchBtn2023" class="p-3.5 rounded-xl border-2 text-left transition flex items-start justify-between border-slate-200 hover:border-slate-300">
-              <div>
-                <div class="flex items-center gap-1.5">
-                  <span class="font-bold text-sm text-slate-900">2023–2027 Batch Onwards</span>
-                  <span class="text-[10px] font-semibold px-1.5 py-0.5 rounded bg-slate-200 text-slate-700">BASE</span>
-                </div>
-                <p class="text-xs text-slate-600 mt-1">Original 160-credit structure with 20/20/20/40 lab weightage and classic course codes.</p>
-              </div>
-              <span class="w-4 h-4 rounded-full border-2 border-slate-300 mt-0.5 shrink-0"></span>
-            </button>
-          </div>
-        </div>
-
-        <!-- Step 2: Select Semester Grid -->
-        <div>
-          <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">2. Choose Your Semester (Saves Immediately to Cookies)</label>
-          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5" id="modalSemGrid">
-            <!-- Populated dynamically by JS -->
-          </div>
-        </div>
-
-        <div class="flex items-center justify-between pt-3 border-t border-slate-200 text-xs text-slate-500">
-          <span>Cookie Persistence: <strong class="text-mody-green">Enabled (365 Days)</strong></span>
-          <button type="button" onclick="saveAndCloseModal()" class="px-5 py-2.5 rounded-xl font-bold text-white bg-mody-green hover:bg-mody-darkgreen shadow-md transition">
-            Save &amp; Open Semester Dashboard &rarr;
-          </button>
-        </div>
+      <!-- Clean Semester Grid (No Batch Selector) -->
+      <div class="grid grid-cols-2 gap-2.5" id="modalSemGrid">
+        <!-- Populated dynamically by JS -->
       </div>
     </div>
   </div>
 
-  <!-- FOOTER -->
-  <footer class="bg-slate-900 text-slate-400 text-xs py-8 px-4 mt-12 border-t-4 border-mody-gold no-print">
-    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-      <div class="flex items-center gap-3">
-        <div class="w-9 h-9 rounded-full bg-mody-green border border-amber-400 flex items-center justify-center text-amber-300 font-serif font-bold">mu</div>
-        <div>
-          <p class="font-bold text-white text-sm">ModyHelper — B.Tech (CSE) Student Syllabus &amp; Academic Portal</p>
-          <p class="text-slate-400">Department of Computer Science &amp; Engineering, School of Engineering &amp; Technology (SET), Mody University, Lakshmangarh</p>
-        </div>
+  <!-- MINIMALIST FOOTER -->
+  <footer class="bg-white/75 border-t border-slate-200/80 text-slate-500 text-xs py-6 px-4 mt-10 no-print">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+      <div class="flex items-center gap-2.5 flex-wrap">
+        <div class="w-7 h-7 rounded-lg bg-gradient-to-br from-mody-darkgreen to-mody-green border border-amber-400/70 flex items-center justify-center text-amber-300 font-serif font-bold text-xs">mu</div>
+        <p class="text-slate-600 font-medium">
+          ModyHelper &bull; Made by <a href="https://www.linkedin.com/in/hansika12" target="_blank" rel="noopener noreferrer" class="text-mody-green font-semibold hover:underline">Hansika</a>
+        </p>
       </div>
-      <div class="flex flex-wrap gap-3 text-xs">
-        <button type="button" onclick="openSemesterModal()" class="text-amber-400 hover:underline font-medium">Change Semester Cookie</button>
-        <span>&bull;</span>
-        <button type="button" onclick="resetAllProgress()" class="text-slate-400 hover:text-rose-400 transition">Reset Study Checkboxes</button>
-        <span>&bull;</span>
-        <a href="https://www.modyuniversity.ac.in/" target="_blank" rel="noopener noreferrer" class="text-slate-300 hover:text-white underline">modyuniversity.ac.in</a>
+      <div class="flex flex-wrap items-center gap-3 text-xs">
+        <button type="button" onclick="openSemesterModal()" class="text-mody-green hover:text-mody-darkgreen font-semibold hover:underline">Switch Semester</button>
+        <span class="text-slate-300">&bull;</span>
+        <button type="button" onclick="resetAllProgress()" class="text-slate-500 hover:text-rose-600 transition">Reset Progress</button>
+        <span class="text-slate-300">&bull;</span>
+        <a href="https://www.modyuniversity.ac.in/school-of-engineering-and-technology/departments/computer-science-and-engineering/" target="_blank" rel="noopener noreferrer" class="text-slate-500 hover:text-slate-900 hover:underline">Mody University CSE &nearr;</a>
       </div>
     </div>
   </footer>
@@ -3871,10 +3813,7 @@
     }
 
     function updateCookieBadge() {
-      const badgeText = document.getElementById("cookieStatusText");
-      if (badgeText) {
-        badgeText.textContent = "Saved: Sem " + state.selectedSem + " (" + state.selectedBatch + ")";
-      }
+      // Cookie state is reflected directly in the navbar Sem & Batch controls.
     }
 
     function loadSavedState() {
@@ -3908,10 +3847,9 @@
     }
 
     function syncHeaderSelects() {
-      const semSel = document.getElementById("headerSemSelect");
-      const batchSel = document.getElementById("headerBatchSelect");
-      if (semSel) semSel.value = String(state.selectedSem);
-      if (batchSel) batchSel.value = state.selectedBatch;
+      document.querySelectorAll(".header-sem-label").forEach(el => {
+        el.textContent = "Sem " + state.selectedSem;
+      });
     }
 
     // =========================================================================
@@ -4056,13 +3994,6 @@
     window.selectModalSemester = function(semNum) {
       state.selectedSem = Number(semNum);
       setCookie("modyhelper_sem", String(semNum), 365);
-      syncHeaderSelects();
-      updateCookieBadge();
-      renderModalContents();
-    };
-
-    window.saveAndCloseModal = function() {
-      setCookie("modyhelper_sem", String(state.selectedSem), 365);
       setCookie("modyhelper_batch", state.selectedBatch, 365);
       syncHeaderSelects();
       updateCookieBadge();
@@ -4072,39 +4003,20 @@
       renderApp();
     };
 
-    function renderModalContents() {
-      const btn2025 = document.getElementById("modalBatchBtn2025");
-      const btn2023 = document.getElementById("modalBatchBtn2023");
-      if (btn2025 && btn2023) {
-        if (state.selectedBatch === "2025-2029") {
-          btn2025.className = "p-3.5 rounded-xl border-2 text-left transition flex items-start justify-between border-mody-green bg-emerald-50/70";
-          btn2023.className = "p-3.5 rounded-xl border-2 text-left transition flex items-start justify-between border-slate-200 hover:border-slate-300";
-        } else {
-          btn2023.className = "p-3.5 rounded-xl border-2 text-left transition flex items-start justify-between border-mody-green bg-emerald-50/70";
-          btn2025.className = "p-3.5 rounded-xl border-2 text-left transition flex items-start justify-between border-slate-200 hover:border-slate-300";
-        }
-      }
+    window.saveAndCloseModal = function() {
+      closeSemesterModal();
+    };
 
+    function renderModalContents() {
       const grid = document.getElementById("modalSemGrid");
       if (!grid) return;
       let html = "";
       for (let s = 1; s <= 8; s++) {
-        const meta = SEMESTER_META[s];
         const isSelected = state.selectedSem === s;
-        const cr = state.selectedBatch === "2025-2029" ? meta.credits2025 : meta.credits2023;
-        const count = getCoursesForSemester(s).length;
         html += `
-          <button type="button" onclick="selectModalSemester(${s})" class="p-3 rounded-xl border-2 text-left transition flex flex-col justify-between ${isSelected ? 'border-mody-gold bg-amber-50/90 shadow-sm' : 'border-slate-200 hover:border-emerald-300 bg-white'}">
-            <div class="flex items-center justify-between">
-              <span class="text-xs font-extrabold uppercase tracking-wider ${isSelected ? 'text-amber-900' : 'text-mody-green'}">Semester ${s}</span>
-              ${isSelected ? '<span class="w-2.5 h-2.5 rounded-full bg-mody-gold"></span>' : ''}
-            </div>
-            <p class="text-[11px] font-semibold text-slate-700 mt-1">${meta.year}</p>
-            <p class="text-[10px] text-slate-500">${meta.term}</p>
-            <div class="mt-2 pt-1.5 border-t border-slate-200/80 flex items-center justify-between text-[10px] font-bold text-slate-600">
-              <span>${cr} Credits</span>
-              <span>${count} Subjects</span>
-            </div>
+          <button type="button" onclick="selectModalSemester(${s})" class="px-3.5 py-3 rounded-xl border text-sm font-semibold transition active:scale-[0.97] flex items-center justify-between ${isSelected ? 'border-mody-green bg-mody-lightgreen text-mody-darkgreen shadow-xs ring-1 ring-mody-gold/40' : 'border-slate-200 hover:border-mody-green/50 hover:bg-mody-lightgreen/50 text-slate-700 bg-white'}">
+            <span>Sem ${s}</span>
+            ${isSelected ? '<span class="w-2 h-2 rounded-full bg-mody-gold"></span>' : '<span class="text-slate-300 text-xs">&rarr;</span>'}
           </button>
         `;
       }
@@ -4124,9 +4036,9 @@
         const el = document.getElementById(id);
         if (!el) return;
         if (map[state.currentView] === id) {
-          el.className = "px-2.5 py-1.5 rounded-md text-xs font-semibold transition bg-mody-green text-white shadow-sm flex items-center gap-1";
+          el.className = "px-3 py-2 sm:py-1.5 rounded-lg text-xs font-semibold transition bg-mody-green text-white shadow-sm flex items-center gap-1.5 whitespace-nowrap active:scale-[0.97]";
         } else {
-          el.className = "px-2.5 py-1.5 rounded-md text-xs font-semibold transition text-slate-700 hover:bg-white flex items-center gap-1";
+          el.className = "px-3 py-2 sm:py-1.5 rounded-lg text-xs font-semibold transition text-slate-600 hover:text-slate-900 hover:bg-white flex items-center gap-1.5 whitespace-nowrap active:scale-[0.97]";
         }
       });
     }
@@ -4213,6 +4125,9 @@
     function renderApp() {
       const container = document.getElementById("appMainContainer");
       if (!container) return;
+      container.classList.remove("animate-view-in");
+      void container.offsetWidth;
+      container.classList.add("animate-view-in");
 
       if (state.currentView === "dashboard") {
         container.innerHTML = renderDashboardView();
@@ -4263,7 +4178,7 @@
 
       // Subject Cards Grid
       let cardsHtml = "";
-      courses.forEach(c => {
+      courses.forEach((c, idx) => {
         const code = getCourseCodeForBatch(c);
         const cr = getCourseCreditsForBatch(c);
         const tVal = getCourseTForBatch(c);
@@ -4271,7 +4186,7 @@
         const prog = getCourseProgress(c);
 
         cardsHtml += `
-          <div class="bg-white rounded-2xl border ${c.isUpdated2025 && state.selectedBatch === '2025-2029' ? 'border-amber-400 ring-1 ring-amber-400/40' : 'border-slate-200'} shadow-sm hover:shadow-md transition flex flex-col justify-between overflow-hidden group">
+          <div style="animation-delay: ${Math.min(idx * 35, 280)}ms" class="animate-card-in bg-white rounded-2xl border ${c.isUpdated2025 && state.selectedBatch === '2025-2029' ? 'border-amber-300/80 ring-1 ring-amber-400/20' : 'border-slate-200/80'} shadow-xs hover:shadow-lg hover:-translate-y-1 transition-all duration-200 flex flex-col justify-between overflow-hidden group">
             <div>
               <!-- Card Top Strip -->
               <div class="px-5 pt-4 pb-3 border-b border-slate-100 flex items-start justify-between gap-2 bg-gradient-to-r from-slate-50 to-white">
@@ -4387,84 +4302,20 @@
       });
 
       return `
-        <div class="space-y-6">
-          <!-- Semester Switcher Pills -->
-          <div class="flex items-center justify-between flex-wrap gap-2 bg-slate-100 p-2 rounded-2xl border border-slate-200">
-            <div class="flex flex-wrap items-center gap-1.5">
-              ${semTabsHtml}
-            </div>
-            <div class="text-xs text-slate-600 font-medium px-2">
-              Showing: <strong class="text-mody-green">${state.selectedBatch} Batch</strong>
-            </div>
-          </div>
-
-          <!-- Hero Banner -->
-          <div class="mody-gradient rounded-2xl p-6 sm:p-8 text-white shadow-lg relative overflow-hidden">
-            <div class="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
-              <div>
-                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-amber-400/40 text-amber-300 text-xs font-bold mb-3">
-                  <span>B.Tech (CSE) Four Year Program</span>
-                  <span>&bull;</span>
-                  <span>${state.selectedBatch} Batch Onwards</span>
-                </div>
-                <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight">
-                  Semester ${sem}: ${meta.year} — ${meta.term}
-                </h1>
-                <p class="text-emerald-100 text-sm mt-1.5 max-w-2xl">
-                  Click any subject card below to open its dedicated page with complete unit-wise syllabus, lecture hours, CW/MTE/PBL/ETE marks split, textbooks, and official Mody University sheet view.
-                </p>
-              </div>
-
-              <!-- KPI Summary Boxes -->
-              <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 shrink-0">
-                <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-3.5 text-center">
-                  <span class="block text-[11px] uppercase tracking-wider text-emerald-200 font-semibold">Total Credits</span>
-                  <span class="text-2xl font-extrabold text-amber-300">${totalCredits}</span>
-                </div>
-                <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-3.5 text-center">
-                  <span class="block text-[11px] uppercase tracking-wider text-emerald-200 font-semibold">Subjects</span>
-                  <span class="text-2xl font-extrabold text-white">${courses.length}</span>
-                </div>
-                <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-3.5 text-center">
-                  <span class="block text-[11px] uppercase tracking-wider text-emerald-200 font-semibold">Contact Hrs/Wk</span>
-                  <span class="text-2xl font-extrabold text-white">${weeklyHours}h</span>
-                </div>
-                <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-3.5 text-center">
-                  <span class="block text-[11px] uppercase tracking-wider text-emerald-200 font-semibold">Your Progress</span>
-                  <span class="text-2xl font-extrabold text-emerald-300">${overallPct}%</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- New 2025-2029 Changes Callout for this Semester -->
-          ${semChangesObj ? `
-            <div class="bg-amber-50/90 border-l-4 border-mody-gold rounded-r-2xl p-4 sm:p-5 shadow-sm">
-              <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
-                <div class="flex items-center gap-2">
-                  <span class="px-2 py-0.5 rounded bg-mody-gold text-white font-extrabold text-[11px] uppercase">New 2025–2029 Updates in Sem ${sem}</span>
-                  <h2 class="font-bold text-sm sm:text-base text-amber-950">${semChangesObj.title}</h2>
-                </div>
-                <button type="button" onclick="switchMainView('changes')" class="text-xs font-bold text-amber-900 underline hover:text-mody-green">
-                  View Full 2023 vs 2025 Comparison &rarr;
-                </button>
-              </div>
-              <ul class="space-y-1 text-xs text-amber-900 list-disc list-inside">
-                ${semChangesObj.changes.map(ch => `<li>${ch}</li>`).join("")}
-              </ul>
-            </div>
-          ` : ''}
-
-          <!-- Subject Cards Section -->
+        <div class="space-y-7">
+          <!-- Clean Subject Cards Section -->
           <div>
-            <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+            <div class="flex flex-wrap items-center justify-between gap-3 mb-5">
               <div>
-                <h2 class="text-lg font-extrabold text-slate-900">Semester ${sem} Subjects (${courses.length} Courses)</h2>
-                <p class="text-xs text-slate-500">Every subject has a dedicated page with unit-wise topics, marks weightage, and official university layout.</p>
+                <div class="flex items-center gap-2.5 flex-wrap">
+                  <h1 class="text-xl sm:text-2xl font-extrabold tracking-tight text-slate-900">Semester ${sem} Subjects</h1>
+                  <span class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-600 border border-slate-200/80">${courses.length} Courses &bull; ${totalCredits} Credits</span>
+                </div>
+                <p class="text-xs sm:text-sm text-slate-500 mt-1">${meta.year} (${meta.term}) &bull; ${weeklyHours} hrs/week &bull; <span class="font-semibold text-emerald-700">${overallPct}% syllabus completed</span></p>
               </div>
               <div class="flex items-center gap-2">
-                <button type="button" onclick="switchMainView('calculator')" class="px-3 py-1.5 rounded-lg bg-white border border-slate-200 text-xs font-bold text-mody-green hover:bg-emerald-50 transition">
-                  Calculate Sem ${sem} SGPA &rarr;
+                <button type="button" onclick="switchMainView('calculator')" class="px-3.5 py-2 rounded-xl bg-white border border-slate-200/90 text-xs font-semibold text-slate-700 hover:border-emerald-300 hover:text-emerald-700 hover:bg-emerald-50/40 shadow-xs transition">
+                  Calculate SGPA &rarr;
                 </button>
               </div>
             </div>
@@ -4509,6 +4360,33 @@
                   ${tableRowsHtml}
                 </tbody>
               </table>
+            </div>
+          </div>
+
+          <!-- Upcoming Roadmap (Future Planning) -->
+          <div class="rounded-2xl border border-dashed border-emerald-300/80 bg-gradient-to-r from-mody-lightgreen/70 to-amber-50/40 p-4 sm:p-5">
+            <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+              <div class="flex items-center gap-2">
+                <span class="px-2 py-0.5 rounded-full bg-mody-darkgreen text-amber-300 text-[10px] font-bold uppercase tracking-wider">Coming Soon</span>
+                <h3 class="text-sm font-bold text-slate-900">What&rsquo;s Next for ModyHelper</h3>
+              </div>
+              <span class="text-[11px] font-medium text-slate-500">Planned Future Expansion</span>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div class="bg-white/85 rounded-xl p-3.5 border border-slate-200/70 flex items-start gap-3">
+                <div class="w-8 h-8 rounded-lg bg-emerald-100 text-mody-darkgreen flex items-center justify-center font-bold text-sm shrink-0">+</div>
+                <div>
+                  <h4 class="text-xs font-bold text-slate-900">More B.Tech Branches</h4>
+                  <p class="text-[11px] text-slate-600 mt-0.5">Expanding syllabus &amp; SGPA support beyond CSE to additional Mody University engineering branches.</p>
+                </div>
+              </div>
+              <div class="bg-white/85 rounded-xl p-3.5 border border-slate-200/70 flex items-start gap-3">
+                <div class="w-8 h-8 rounded-lg bg-amber-100 text-amber-800 flex items-center justify-center font-bold text-sm shrink-0">&#9998;</div>
+                <div>
+                  <h4 class="text-xs font-bold text-slate-900">Colleague-Contributed Notes &amp; Lab Material</h4>
+                  <p class="text-[11px] text-slate-600 mt-0.5">Student-shared lecture notes, lab manuals, and study resources contributed by classmates &amp; seniors.</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -4767,10 +4645,8 @@
             ` : ''}
           </div>
 
-          <!-- Marks Distribution & Contact Hours Breakdown Grid -->
-          <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-            <!-- Left 7 cols: Marks Split & Weightage Visual Breakdown -->
-            <div class="lg:col-span-7 bg-white rounded-2xl border border-slate-200 p-5 sm:p-6 shadow-sm flex flex-col justify-between">
+          <!-- Marks Split & Weightage Visual Breakdown -->
+          <div class="bg-white rounded-2xl border border-slate-200 p-5 sm:p-6 shadow-sm flex flex-col justify-between">
               <div>
                 <div class="flex items-center justify-between mb-3">
                   <div>
@@ -4827,57 +4703,7 @@
               </div>
             </div>
 
-            <!-- Right 5 cols: Interactive Subject Score Simulator -->
-            <div class="lg:col-span-5 bg-white rounded-2xl border border-slate-200 p-5 sm:p-6 shadow-sm">
-              <div class="flex items-center justify-between mb-3">
-                <div>
-                  <h2 class="text-base font-extrabold text-slate-900">Target Marks Estimator</h2>
-                  <p class="text-xs text-slate-500">Estimate your score in ${code} out of 100</p>
-                </div>
-                <span id="simTotalScore" class="text-lg font-extrabold text-mody-green bg-emerald-50 px-3 py-1 rounded-xl border border-emerald-200">${simTotal.toFixed(1)} / 100</span>
-              </div>
 
-              <div class="space-y-3 text-xs">
-                ${w.CW ? `
-                  <div>
-                    <div class="flex justify-between font-semibold mb-1">
-                      <span>Class Work (CW — Max ${w.CW})</span>
-                      <input type="number" min="0" max="${w.CW}" value="${state.marksSim.cw}" oninput="updateMarksSimulator('cw', this.value)" class="w-16 text-right font-bold border border-slate-300 rounded px-1.5 py-0.5" />
-                    </div>
-                  </div>
-                ` : ''}
-                ${w.MTE ? `
-                  <div>
-                    <div class="flex justify-between font-semibold mb-1">
-                      <span>Mid-Term Exam (MTE — Max ${w.MTE})</span>
-                      <input type="number" min="0" max="${w.MTE}" value="${state.marksSim.mte}" oninput="updateMarksSimulator('mte', this.value)" class="w-16 text-right font-bold border border-slate-300 rounded px-1.5 py-0.5" />
-                    </div>
-                  </div>
-                ` : ''}
-                ${w.PBL ? `
-                  <div>
-                    <div class="flex justify-between font-semibold mb-1">
-                      <span>Project Based Learning (PBL — Max ${w.PBL})</span>
-                      <input type="number" min="0" max="${w.PBL}" value="${state.marksSim.pbl}" oninput="updateMarksSimulator('pbl', this.value)" class="w-16 text-right font-bold border border-slate-300 rounded px-1.5 py-0.5" />
-                    </div>
-                  </div>
-                ` : ''}
-                ${w.ETE ? `
-                  <div>
-                    <div class="flex justify-between font-semibold mb-1">
-                      <span>End-Term Exam (ETE — Max ${w.ETE})</span>
-                      <input type="number" min="0" max="${w.ETE}" value="${state.marksSim.ete}" oninput="updateMarksSimulator('ete', this.value)" class="w-16 text-right font-bold border border-slate-300 rounded px-1.5 py-0.5" />
-                    </div>
-                  </div>
-                ` : ''}
-              </div>
-
-              <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
-                <span class="font-semibold text-slate-600">Estimated Grade Band:</span>
-                <span id="simExpectedGrade" class="font-extrabold text-amber-800 bg-amber-50 px-2.5 py-1 rounded border border-amber-200">A+ (Excellent — 9 GP)</span>
-              </div>
-            </div>
-          </div>
 
           <!-- COMPLETE UNIT-WISE SYLLABUS SECTION -->
           <div class="bg-white rounded-2xl border border-slate-200 p-5 sm:p-6 shadow-sm">
@@ -4932,6 +4758,49 @@
                   </div>
                 `;
               }).join("")}
+            </div>
+          </div>
+
+          <!-- Interactive Subject Score Simulator (Below Syllabus) -->
+          <div class="bg-white rounded-2xl border border-slate-200 p-5 sm:p-6 shadow-sm">
+            <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+              <div>
+                <h2 class="text-base font-extrabold text-slate-900">Target Marks Estimator</h2>
+                <p class="text-xs text-slate-500">Estimate your score in ${code} out of 100</p>
+              </div>
+              <span id="simTotalScore" class="text-lg font-extrabold text-mody-green bg-emerald-50 px-3 py-1 rounded-xl border border-emerald-200">${simTotal.toFixed(1)} / 100</span>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-xs">
+              ${w.CW ? `
+                <div class="p-3 rounded-xl bg-slate-50 border border-slate-200/80 flex items-center justify-between gap-2">
+                  <span class="font-semibold text-slate-700">CW (Max ${w.CW})</span>
+                  <input type="number" min="0" max="${w.CW}" value="${state.marksSim.cw}" oninput="updateMarksSimulator('cw', this.value)" class="w-16 text-right font-bold border border-slate-300 rounded-lg px-2 py-1 bg-white" />
+                </div>
+              ` : ''}
+              ${w.MTE ? `
+                <div class="p-3 rounded-xl bg-slate-50 border border-slate-200/80 flex items-center justify-between gap-2">
+                  <span class="font-semibold text-slate-700">MTE (Max ${w.MTE})</span>
+                  <input type="number" min="0" max="${w.MTE}" value="${state.marksSim.mte}" oninput="updateMarksSimulator('mte', this.value)" class="w-16 text-right font-bold border border-slate-300 rounded-lg px-2 py-1 bg-white" />
+                </div>
+              ` : ''}
+              ${w.PBL ? `
+                <div class="p-3 rounded-xl bg-slate-50 border border-slate-200/80 flex items-center justify-between gap-2">
+                  <span class="font-semibold text-slate-700">PBL (Max ${w.PBL})</span>
+                  <input type="number" min="0" max="${w.PBL}" value="${state.marksSim.pbl}" oninput="updateMarksSimulator('pbl', this.value)" class="w-16 text-right font-bold border border-slate-300 rounded-lg px-2 py-1 bg-white" />
+                </div>
+              ` : ''}
+              ${w.ETE ? `
+                <div class="p-3 rounded-xl bg-slate-50 border border-slate-200/80 flex items-center justify-between gap-2">
+                  <span class="font-semibold text-slate-700">ETE (Max ${w.ETE})</span>
+                  <input type="number" min="0" max="${w.ETE}" value="${state.marksSim.ete}" oninput="updateMarksSimulator('ete', this.value)" class="w-16 text-right font-bold border border-slate-300 rounded-lg px-2 py-1 bg-white" />
+                </div>
+              ` : ''}
+            </div>
+
+            <div class="mt-4 pt-3 border-t border-slate-100 flex flex-wrap items-center justify-between gap-2 text-xs">
+              <span class="font-semibold text-slate-600">Estimated Grade Band:</span>
+              <span id="simExpectedGrade" class="font-extrabold text-amber-800 bg-amber-50 px-2.5 py-1 rounded border border-amber-200">A+ (Excellent — 9 GP)</span>
             </div>
           </div>
 
@@ -5124,14 +4993,7 @@
                   Every structural, credit, evaluation weightage, and unit-level syllabus update from the new Mody University B.Tech CSE curriculum is integrated below.
                 </p>
               </div>
-              <div class="flex items-center gap-2">
-                <button type="button" onclick="handleBatchChange('2025-2029')" class="px-3.5 py-2 rounded-xl text-xs font-bold ${state.selectedBatch === '2025-2029' ? 'bg-mody-green text-white shadow' : 'bg-white border border-slate-300 text-slate-700'}">
-                  Active: 2025–2029 Batch
-                </button>
-                <button type="button" onclick="handleBatchChange('2023-2027')" class="px-3.5 py-2 rounded-xl text-xs font-bold ${state.selectedBatch === '2023-2027' ? 'bg-mody-green text-white shadow' : 'bg-white border border-slate-300 text-slate-700'}">
-                  Active: 2023–2027 Batch
-                </button>
-              </div>
+
             </div>
           </div>
 
